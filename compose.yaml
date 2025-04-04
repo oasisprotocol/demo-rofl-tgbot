@@ -1,0 +1,8 @@
+services:
+  python-telegram-bot:
+    build: .
+    image: "ghcr.io/oasisprotocol/demo-rofl-tgbot@sha256:2d5e9010d1d4cbe41254567487d0ab26152abb4eeaa94169c8ec57dd053b19fb"
+    platform: linux/amd64
+    environment:
+      - TOKEN=${TOKEN}
+
