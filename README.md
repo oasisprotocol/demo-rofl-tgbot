@@ -7,7 +7,7 @@ A simple Telegram bot running inside Oasis ROFL TEE deployed on the
 
 ![Telegram bot ROFL on Oasis Explorer](./demo-rofl-tgbot-explorer.png)
 
-[Oasis ROFL Quickstart]: https://docs.oasis.io/build/rofl/quickstart
+[Oasis ROFL Quickstart]: https://docs.oasis.io/build/rofl/
 [Oasis Sapphire Testnet chain]: https://explorer.oasis.io/testnet/sapphire/rofl/app/rofl1qpjsc3qplf2szw7w3rpzrpq5rqvzv4q5x5j23msu
 
 ## Run as a standalone bot app
