@@ -3,17 +3,17 @@ version: 0.1.0
 tee: tdx
 kind: container
 resources:
-  memory: 512
+  memory: 4096
   cpus: 1
   storage:
     kind: disk-persistent
-    size: 512
+    size: 10000
 artifacts:
   firmware: https://github.com/oasisprotocol/oasis-boot/releases/download/v0.4.1/ovmf.tdx.fd#db47100a7d6a0c1f6983be224137c3f8d7cb09b63bb1c7a5ee7829d8e994a42f
   kernel: https://github.com/oasisprotocol/oasis-boot/releases/download/v0.4.1/stage1.bin#06e12cba9b2423b4dd5916f4d84bf9c043f30041ab03aa74006f46ef9c129d22
   stage2: https://github.com/oasisprotocol/oasis-boot/releases/download/v0.4.1/stage2-podman.tar.bz2#6f2487aa064460384309a58c858ffea9316e739331b5c36789bb2f61117869d6
   container:
-    runtime: https://github.com/oasisprotocol/oasis-sdk/releases/download/rofl-containers%2Fv0.4.2/rofl-containers#0cbaa4c0c1b35c5ed41156868bee9f3726f52eeedc01b3060d3b2eb67d76f546
+    runtime: https://github.com/oasisprotocol/oasis-sdk/releases/download/rofl-containers%2Fv0.5.0/rofl-containers#800be74e543f1d10d12ef6fadce89dd0a0ce7bc798dbab4f8d7aa012d82fbff1
     compose: compose.yaml
 deployments:
   default:
@@ -21,6 +21,7 @@ deployments:
     network: testnet
     paratime: sapphire
     admin: dave
+    oci_repository: ghcr.io/oasisprotocol/demo-rofl-tgbot:rofl
     trust_root:
       height: 25979056
       hash: 6e558b1731c4045425f411604b5a7dc172a45c4146b29b159ad6b0078a98b88c
@@ -31,12 +32,19 @@ deployments:
           min_tcb_evaluation_data_number: 18
           tdx: {}
       enclaves:
-        - p7mcZJ49EaniEQ4Ug2b/eSDsDOn1/rmkAB7rAHV6ld4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
-        - WKoqog9u5jBGpV+r4Uqiks9I24UV8IW3VAAszVLPmmQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+        - id: A/NM91Qb8vbWvMSUtilDZ9frrmTuvsTpP8lx6pwRe2gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+        - id: bB5JEWm0rIGkr6aDSg1lzx8RQK50Gqm4ufFh1hhdrZYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
       endorsements:
         - any: {}
       fees: endorsing_node
       max_expiration: 3
     secrets:
+      - name: VOLUME
+        value: pGJwa1ggD6gAzZP0OAcZ47kwsRfJJvollCiUuWIDhKv6gPWbz1FkbmFtZVaQ0jrgl9Zd7Xdaj3cNVx634Vk9viExZW5vbmNlT2RLDzBJ+j2j+yDvdTO2RGV2YWx1ZVgf8gBaPthWzPqEM21S9WNjTrDLMrzo7IwOhOsvWFiTdA==
       - name: TOKEN
-        value: pGJwa1ggNxLBy/2sBXhh8ShwiqC5CQdTpI8b1yhG5JKN09JWGl9kbmFtZVU5a6ofrB25gdjLEbiu+v4VSR4JYjFlbm9uY2VPb3EfKc24DIbIWDTmbvQfZXZhbHVlWD6xALlgZkK++PEok01Ou6p+XQY9aNPdDCilDYG705PgAUe+lWsB7DCN3nj0Abc5JG+vC+fwG7h4zDd4Rc3Q6g==
+        value: pGJwa1ggH87VciDbeVokXNJP4FAtEhbjTR98fpbK/gUo9bKq2ltkbmFtZVVH+GTwGpt6lliTGvv14k8xYDRqt5hlbm9uY2VPz0iK5SmS5lvbbLeWJfS7ZXZhbHVlWD7FAfwOX7GVfK30sIsvskb+0MORBhNkgTsA5PyRm2MHMpURYC+JSOhd5KfMSwIvkWJcJCDoPFS5UzsExbo0kA==
+    machines:
+      matevz_machine:
+        provider: matevz_provider
+        offer: large
+        id: "0000000000000013"
