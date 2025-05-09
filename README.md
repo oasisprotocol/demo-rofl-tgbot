@@ -28,10 +28,10 @@ TOKEN="0123456789:your_telegram_token" docker compose up
 ```shell
 rm rofl.yaml
 
-oasis init
-oasis create
+oasis rofl init
+oasis rofl create
 oasis build
 echo -n "0123456789:your_telegram_token" | oasis rofl secret set TOKEN -
-oasis update
-oasis deploy
+oasis rofl update
+oasis rofl deploy
 ```
