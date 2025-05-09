@@ -1,7 +1,15 @@
 services:
+  ollama:
+    image: "docker.io/ollama/ollama"
+    ports:
+      - "11434:11434"
+    volumes:
+      - /storage/ollama:/root/.ollama
+    entrypoint: ["/usr/bin/bash", "-c", "/bin/ollama serve & sleep 5; ollama pull deepseek-r1:1.5b; wait"]
+
   python-telegram-bot:
     build: .
-    image: "ghcr.io/oasisprotocol/demo-rofl-tgbot@sha256:4ebcd0c713a47286f86a2434acadf2d7199706589605e417a5958c0f23cc78cc"
+    image: "ghcr.io/oasisprotocol/demo-rofl-tgbot:ollama"
     platform: linux/amd64
     environment:
       - TELEGRAM_API_TOKEN=${TELEGRAM_API_TOKEN}
