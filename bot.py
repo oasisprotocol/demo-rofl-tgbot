@@ -37,6 +37,9 @@ async def chat(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
     history[update.effective_user.id].append(update.message.text)
     response = await ask_ollama(history[update.effective_user.id])
+
+    if "</think>" in response:
+        response = response[response.find("</think>") + 9:]
     await update.message.reply_text(response)
 
 token = os.getenv("TELEGRAM_API_TOKEN") or os.getenv("TOKEN")
