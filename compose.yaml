@@ -9,7 +9,7 @@ services:
 
   python-telegram-bot:
     build: .
-    image: "ghcr.io/oasisprotocol/demo-rofl-tgbot"
+    image: "ghcr.io/oasisprotocol/demo-rofl-tgbot:ollama"
     platform: linux/amd64
     environment:
       - TOKEN=${TOKEN}
