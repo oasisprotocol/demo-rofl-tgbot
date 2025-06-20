@@ -40,7 +40,11 @@ async def chat(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
     if "</think>" in response:
         response = response[response.find("</think>") + 9:]
-    await update.message.reply_text(response)
+
+    # Split messages longer than 4096 characters (Telegram's message length limit)
+    chunks = [response[i:i+4096] for i in range(0, len(response), 4096)]
+    for chunk in chunks:
+        await update.message.reply_text(chunk)
 
 app = ApplicationBuilder().token(os.getenv("TOKEN")).build()
 
