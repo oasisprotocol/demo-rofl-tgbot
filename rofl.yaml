@@ -1,30 +1,30 @@
-name: demo-rofl-tgbot
+name: demo-rofl-tgbot-ollama
 version: 0.1.0
 tee: tdx
 kind: container
 resources:
   memory: 4096
-  cpus: 1
+  cpus: 2
   storage:
     kind: disk-persistent
     size: 10000
 artifacts:
-  firmware: https://github.com/oasisprotocol/oasis-boot/releases/download/v0.4.1/ovmf.tdx.fd#db47100a7d6a0c1f6983be224137c3f8d7cb09b63bb1c7a5ee7829d8e994a42f
-  kernel: https://github.com/oasisprotocol/oasis-boot/releases/download/v0.4.1/stage1.bin#06e12cba9b2423b4dd5916f4d84bf9c043f30041ab03aa74006f46ef9c129d22
-  stage2: https://github.com/oasisprotocol/oasis-boot/releases/download/v0.4.1/stage2-podman.tar.bz2#6f2487aa064460384309a58c858ffea9316e739331b5c36789bb2f61117869d6
+  firmware: https://github.com/oasisprotocol/oasis-boot/releases/download/v0.5.0/ovmf.tdx.fd#db47100a7d6a0c1f6983be224137c3f8d7cb09b63bb1c7a5ee7829d8e994a42f
+  kernel: https://github.com/oasisprotocol/oasis-boot/releases/download/v0.5.0/stage1.bin#23877530413a661e9187aad2eccfc9660fc4f1a864a1fbad2f6c7d43512071ca
+  stage2: https://github.com/oasisprotocol/oasis-boot/releases/download/v0.5.0/stage2-podman.tar.bz2#631349bef06990dd6ae882812a0420f4b35f87f9fe945b274bcfb10fc08c4ea3
   container:
-    runtime: https://github.com/oasisprotocol/oasis-sdk/releases/download/rofl-containers%2Fv0.5.0/rofl-containers#800be74e543f1d10d12ef6fadce89dd0a0ce7bc798dbab4f8d7aa012d82fbff1
+    runtime: https://github.com/oasisprotocol/oasis-sdk/releases/download/rofl-containers%2Fv0.5.1/rofl-containers#9afa712b939528d758294bf49181466fc2066bbe507f92777ddc3bce8af6ee37
     compose: compose.yaml
 deployments:
   default:
-    app_id: rofl1qpjsc3qplf2szw7w3rpzrpq5rqvzv4q5x5j23msu
+    app_id: rofl1qqrg6gwykxr799vnphdd9umkse3q3nlp35shlyc7
     network: testnet
     paratime: sapphire
     admin: dave
-    oci_repository: ghcr.io/oasisprotocol/demo-rofl-tgbot:rofl
+    oci_repository: rofl.sh/cbe7a44c-fd8d-489b-ae06-712fbc7cabb0:1750329424
     trust_root:
-      height: 25979056
-      hash: 6e558b1731c4045425f411604b5a7dc172a45c4146b29b159ad6b0078a98b88c
+      height: 27127259
+      hash: 8bf159d64ff3657429035e3d71e93aa89051f3abf7a7cb16de95fc6aa6072935
     policy:
       quotes:
         pcs:
@@ -32,19 +32,21 @@ deployments:
           min_tcb_evaluation_data_number: 18
           tdx: {}
       enclaves:
-        - id: A/NM91Qb8vbWvMSUtilDZ9frrmTuvsTpP8lx6pwRe2gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
-        - id: bB5JEWm0rIGkr6aDSg1lzx8RQK50Gqm4ufFh1hhdrZYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+        - id: vC4rqbCcJWJlouc8DpMOMuL5DgAabIslTDWg36+X370AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+        - id: 1KlVGLhfBbCZAQRbnj/PG58LUbYt9ror2aWnXB9mw4cAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
       endorsements:
         - any: {}
       fees: endorsing_node
       max_expiration: 3
     secrets:
-      - name: VOLUME
-        value: pGJwa1ggD6gAzZP0OAcZ47kwsRfJJvollCiUuWIDhKv6gPWbz1FkbmFtZVaQ0jrgl9Zd7Xdaj3cNVx634Vk9viExZW5vbmNlT2RLDzBJ+j2j+yDvdTO2RGV2YWx1ZVgf8gBaPthWzPqEM21S9WNjTrDLMrzo7IwOhOsvWFiTdA==
       - name: TOKEN
-        value: pGJwa1ggH87VciDbeVokXNJP4FAtEhbjTR98fpbK/gUo9bKq2ltkbmFtZVVH+GTwGpt6lliTGvv14k8xYDRqt5hlbm9uY2VPz0iK5SmS5lvbbLeWJfS7ZXZhbHVlWD7FAfwOX7GVfK30sIsvskb+0MORBhNkgTsA5PyRm2MHMpURYC+JSOhd5KfMSwIvkWJcJCDoPFS5UzsExbo0kA==
+        value: pGJwa1ggINJxS1+cljHNC6IqCcKLZGwlBnSt9LUreBw8NbZfnl5kbmFtZVWQ8+aaLr3NK3UuioHpu4q9ifj6d4Nlbm9uY2VPDmXH6KQVFNkCESCZRi36ZXZhbHVlWD5v3nuS7b86fmySjV8eIqnG6WKv+cKNDCriy7A3ry+VG5uls2fXCYBAv6XMO2Wt2lRWpBWLEa3RryRQozoB5Q==
+      - name: OLLAMA_SYSTEM_PROMPT
+        value: pGJwa1ggEmuKjTgTlT0YWtmb+eCXeQo1gYI+sojFZ5ZF7cJEHhdkbmFtZVgk0TytbzMDEIRpVO9s05Ve4II4FJ/y1hBBjFCqDXkdUlHsC606ZW5vbmNlT7OWwUhafWVYh8sIibxSXmV2YWx1ZVjVZESd2QXlDm0ef9VXG1llYXP2X9UPZhqNRWko04RZcY1YkxUs5MqMDBv2ip7iFofAf1laXb2L7BAFo/61CK3ulR0ljOe2bTS5lp9k4m7KXyLMg/lWCXAgvG+aHVbSsZI5k2bxd1OMjpkbejXuFea99mZ58FOjPkPVv/XQKfgkfLe8pGFXhqoTlQpTjrMZ+ChF/YMPHKtkYPAaQFI1gnNKhU0iyZ4tWP2Tt3ma7rWbT/6CNrpWsFSRUK2wP6GmaSTZcQiQV9VjiDBXbTvIhtSd9J3yUsOs
+      - name: OLLAMA_MODEL
+        value: pGJwa1ggZ1BZ6zl74udG0qDOaj/O6X7DWP6kXQayDLFJttOxzDBkbmFtZVgcmukegO0C5iJtXL0DQjrH2xcf0UjDtLmX+SarFmVub25jZU8TbUAYw1pGQ6t+kNBSGf5ldmFsdWVYGRmeC6ODqWk3rXi8O1lkiwNZ/gANMPTo43Y=
     machines:
-      matevz_machine:
-        provider: matevz_provider
-        offer: large
-        id: "0000000000000013"
+      default:
+        provider: oasis1qp2ens0hsp7gh23wajxa4hpetkdek3swyyulyrmz
+        offer: playground_short
+        id: 00000000000000cf
