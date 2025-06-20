@@ -1,10 +1,10 @@
-name: demo-rofl-tgbot
+name: demo-rofl-tgbot-ollama
 version: 0.1.0
 tee: tdx
 kind: container
 resources:
   memory: 4096
-  cpus: 1
+  cpus: 2
   storage:
     kind: disk-persistent
     size: 10000
@@ -17,14 +17,14 @@ artifacts:
     compose: compose.yaml
 deployments:
   default:
-    app_id: rofl1qpjsc3qplf2szw7w3rpzrpq5rqvzv4q5x5j23msu
+    app_id: rofl1qqrg6gwykxr799vnphdd9umkse3q3nlp35shlyc7
     network: testnet
     paratime: sapphire
     admin: dave
-    oci_repository: ghcr.io/oasisprotocol/demo-rofl-tgbot:rofl
+    oci_repository: rofl.sh/cbe7a44c-fd8d-489b-ae06-712fbc7cabb0:1750329424
     trust_root:
-      height: 25979056
-      hash: 6e558b1731c4045425f411604b5a7dc172a45c4146b29b159ad6b0078a98b88c
+      height: 27127259
+      hash: 8bf159d64ff3657429035e3d71e93aa89051f3abf7a7cb16de95fc6aa6072935
     policy:
       quotes:
         pcs:
@@ -38,8 +38,12 @@ deployments:
     secrets:
       - name: TELEGRAM_API_TOKEN
         value: pGJwa1ggNxLBy/2sBXhh8ShwiqC5CQdTpI8b1yhG5JKN09JWGl9kbmFtZVU5a6ofrB25gdjLEbiu+v4VSR4JYjFlbm9uY2VPb3EfKc24DIbIWDTmbvQfZXZhbHVlWD6xALlgZkK++PEok01Ou6p+XQY9aNPdDCilDYG705PgAUe+lWsB7DCN3nj0Abc5JG+vC+fwG7h4zDd4Rc3Q6g==
+      - name: OLLAMA_SYSTEM_PROMPT
+        value: pGJwa1ggEmuKjTgTlT0YWtmb+eCXeQo1gYI+sojFZ5ZF7cJEHhdkbmFtZVgk0TytbzMDEIRpVO9s05Ve4II4FJ/y1hBBjFCqDXkdUlHsC606ZW5vbmNlT7OWwUhafWVYh8sIibxSXmV2YWx1ZVjVZESd2QXlDm0ef9VXG1llYXP2X9UPZhqNRWko04RZcY1YkxUs5MqMDBv2ip7iFofAf1laXb2L7BAFo/61CK3ulR0ljOe2bTS5lp9k4m7KXyLMg/lWCXAgvG+aHVbSsZI5k2bxd1OMjpkbejXuFea99mZ58FOjPkPVv/XQKfgkfLe8pGFXhqoTlQpTjrMZ+ChF/YMPHKtkYPAaQFI1gnNKhU0iyZ4tWP2Tt3ma7rWbT/6CNrpWsFSRUK2wP6GmaSTZcQiQV9VjiDBXbTvIhtSd9J3yUsOs
+      - name: OLLAMA_MODEL
+        value: pGJwa1ggZ1BZ6zl74udG0qDOaj/O6X7DWP6kXQayDLFJttOxzDBkbmFtZVgcmukegO0C5iJtXL0DQjrH2xcf0UjDtLmX+SarFmVub25jZU8TbUAYw1pGQ6t+kNBSGf5ldmFsdWVYGRmeC6ODqWk3rXi8O1lkiwNZ/gANMPTo43Y=
     machines:
-      matevz_machine:
-        provider: matevz_provider
-        offer: large
-        id: "0000000000000013"
+      default:
+        provider: oasis1qp2ens0hsp7gh23wajxa4hpetkdek3swyyulyrmz
+        offer: playground_short
+        id: 00000000000000cf

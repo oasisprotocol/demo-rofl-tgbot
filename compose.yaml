@@ -5,7 +5,7 @@ services:
       - "11434:11434"
     volumes:
       - /storage/ollama:/root/.ollama
-    entrypoint: ["/usr/bin/bash", "-c", "/bin/ollama serve & sleep 5; ollama pull deepseek-r1:1.5b; wait"]
+    entrypoint: ["/usr/bin/bash", "-c", "/bin/ollama serve & sleep 5; ollama pull ${OLLAMA_MODEL}; wait"]
 
   python-telegram-bot:
     build: .
@@ -13,4 +13,5 @@ services:
     platform: linux/amd64
     environment:
       - TELEGRAM_API_TOKEN=${TELEGRAM_API_TOKEN}
-      - TOKEN=${TOKEN}
+      - OLLAMA_MODEL=${OLLAMA_MODEL}
+      - OLLAMA_SYSTEM_PROMPT=${OLLAMA_SYSTEM_PROMPT}

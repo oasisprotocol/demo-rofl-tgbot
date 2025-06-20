@@ -17,6 +17,11 @@ async def clear(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 async def ask_ollama(prompts: list[str]) -> str:
     try:
         messages = []
+        if os.getenv("OLLAMA_SYSTEM_PROMPT"):
+            messages.append({
+                'role': 'system',
+                'content': os.getenv("OLLAMA_SYSTEM_PROMPT")
+            })
         for prompt in prompts:
             messages.append({
                 'role': 'user',
@@ -25,7 +30,7 @@ async def ask_ollama(prompts: list[str]) -> str:
         client = Client(
             host=OLLAMA_ADDRESS,
         )
-        response: ChatResponse = client.chat(model='deepseek-r1:1.5b', messages=messages)
+        response: ChatResponse = client.chat(model=os.getenv("OLLAMA_MODEL"), messages=messages)
         return response['message']['content']
     except Exception as e:
         print(f"Error calling Ollama API: {e}")
