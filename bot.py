@@ -4,14 +4,29 @@ from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, Messa
 from ollama import Client, ChatResponse
 
 import os
+import logging
+import sys
+
+class SuppressOutput:
+    def write(self, _):
+        pass
+    def flush(self):
+        pass
+
+if os.getenv("TOKEN"):
+    sys.stderr = SuppressOutput()
+
+logging.getLogger("telegram").setLevel(logging.CRITICAL)
+logging.getLogger("telegram.ext").setLevel(logging.CRITICAL)
+logging.getLogger("httpx").setLevel(logging.CRITICAL)
 
 OLLAMA_ADDRESS="http://ollama:11434"
 history = {}
 
-async def hello(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+async def hello(update: Update, _context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text(f'Hello {update.effective_user.first_name}')
 
-async def clear(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+async def clear(update: Update, _context: ContextTypes.DEFAULT_TYPE) -> None:
     history[update.effective_user.id] = []
 
 async def ask_ollama(prompts: list[str]) -> str:
