@@ -4,7 +4,7 @@ services:
     ports:
       - "11434:11434"
     volumes:
-      - /storage/ollama:/root/.ollama
+      - ollama-storage:/root/.ollama
     entrypoint: ["/usr/bin/bash", "-c", "/bin/ollama serve & sleep 5; ollama pull ${OLLAMA_MODEL}; wait"]
 
   python-telegram-bot:
@@ -15,3 +15,6 @@ services:
       - TELEGRAM_API_TOKEN=${TELEGRAM_API_TOKEN}
       - OLLAMA_MODEL=${OLLAMA_MODEL}
       - OLLAMA_SYSTEM_PROMPT=${OLLAMA_SYSTEM_PROMPT}
+
+volumes:
+  ollama-storage:
