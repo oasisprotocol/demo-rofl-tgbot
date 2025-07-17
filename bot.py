@@ -1,24 +1,28 @@
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler, filters
+from telegram.error import InvalidToken
 
 from ollama import Client, ChatResponse
 
 import os
 import logging
 import sys
+import re
 
-class SuppressOutput:
-    def write(self, _):
-        pass
-    def flush(self):
-        pass
+class TokenRedactingFormatter(logging.Formatter):
+    def format(self, record):
+        original = super().format(record)
+        if os.getenv("TOKEN"):
+            pattern = rf'bot{re.escape(os.getenv("TOKEN"))}'
+            original = re.sub(pattern, 'bot[REDACTED]', original)
+        return original
 
-if os.getenv("TOKEN"):
-    sys.stderr = SuppressOutput()
+formatter = TokenRedactingFormatter('%(levelname)s:%(name)s:%(message)s')
+handler = logging.StreamHandler()
+handler.setFormatter(formatter)
 
-logging.getLogger("telegram").setLevel(logging.CRITICAL)
-logging.getLogger("telegram.ext").setLevel(logging.CRITICAL)
-logging.getLogger("httpx").setLevel(logging.CRITICAL)
+logging.root.handlers = [handler]
+logging.root.setLevel(logging.INFO)
 
 OLLAMA_ADDRESS="http://ollama:11434"
 history = {}
@@ -66,10 +70,29 @@ async def chat(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     for chunk in chunks:
         await update.message.reply_text(chunk)
 
-app = ApplicationBuilder().token(os.getenv("TOKEN")).build()
+original_invalid_token_init = InvalidToken.__init__
 
-app.add_handler(CommandHandler("hello", hello))
-app.add_handler(CommandHandler("clear", clear))
-app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, chat))
+def patched_invalid_token_init(self, message):
+    if os.getenv("TOKEN") and os.getenv("TOKEN") in message:
+        message = message.replace(os.getenv("TOKEN"), "[REDACTED]")
+    original_invalid_token_init(self, message)
 
-app.run_polling()
+InvalidToken.__init__ = patched_invalid_token_init
+
+try:
+    app = ApplicationBuilder().token(os.getenv("TOKEN")).build()
+    
+    app.add_handler(CommandHandler("hello", hello))
+    app.add_handler(CommandHandler("clear", clear))
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, chat))
+    
+    app.run_polling()
+except InvalidToken as e:
+    print("Error: Invalid Telegram bot token provided.", file=sys.stderr)
+    sys.exit(1)
+except Exception as e:
+    error_msg = str(e)
+    if "token" in error_msg.lower() and os.getenv("TOKEN"):
+        error_msg = error_msg.replace(os.getenv("TOKEN"), "[REDACTED]")
+    print(f"Error: {error_msg}", file=sys.stderr)
+    sys.exit(1)
