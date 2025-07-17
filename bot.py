@@ -9,6 +9,8 @@ import logging
 import sys
 import re
 
+logger = logging.getLogger(__name__)
+
 class TokenRedactingFormatter(logging.Formatter):
     def format(self, record):
         original = super().format(record)
@@ -52,7 +54,7 @@ async def ask_ollama(prompts: list[str]) -> str:
         response: ChatResponse = client.chat(model=os.getenv("OLLAMA_MODEL"), messages=messages)
         return response['message']['content']
     except Exception as e:
-        print(f"Error calling Ollama API: {e}")
+        logger.error(f"Error calling Ollama API: {e}")
         return f"Error generating response {e}"
 
 async def chat(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -88,11 +90,11 @@ try:
     
     app.run_polling()
 except InvalidToken as e:
-    print("Error: Invalid Telegram bot token provided.", file=sys.stderr)
+    logger.error("Invalid Telegram bot token provided.")
     sys.exit(1)
 except Exception as e:
     error_msg = str(e)
     if "token" in error_msg.lower() and os.getenv("TOKEN"):
         error_msg = error_msg.replace(os.getenv("TOKEN"), "[REDACTED]")
-    print(f"Error: {error_msg}", file=sys.stderr)
+    logger.error(f"{error_msg}")
     sys.exit(1)
