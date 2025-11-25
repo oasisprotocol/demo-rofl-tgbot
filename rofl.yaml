@@ -38,5 +38,5 @@ deployments:
       fees: endorsing_node
       max_expiration: 3
     secrets:
-      - name: TOKEN
+      - name: TELEGRAM_API_TOKEN
         value: pGJwa1ggNxLBy/2sBXhh8ShwiqC5CQdTpI8b1yhG5JKN09JWGl9kbmFtZVU5a6ofrB25gdjLEbiu+v4VSR4JYjFlbm9uY2VPb3EfKc24DIbIWDTmbvQfZXZhbHVlWD6xALlgZkK++PEok01Ou6p+XQY9aNPdDCilDYG705PgAUe+lWsB7DCN3nj0Abc5JG+vC+fwG7h4zDd4Rc3Q6g==
