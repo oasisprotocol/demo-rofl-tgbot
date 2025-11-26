@@ -14,13 +14,13 @@ A simple Telegram bot running inside Oasis ROFL TEE deployed on the
 
 ```shell
 pip install -r requirements.txt
-TOKEN="0123456789:your_telegram_token" python bot.py
+TELEGRAM_API_TOKEN="0123456789:your_telegram_token" python bot.py
 ```
 
 ## Run inside docker
 
 ```shell
-TOKEN="0123456789:your_telegram_token" docker compose up
+TELEGRAM_API_TOKEN="0123456789:your_telegram_token" docker compose up
 ```
 
 ## Run as a ROFL app
@@ -31,7 +31,7 @@ rm rofl.yaml
 oasis rofl init
 oasis rofl create
 oasis build
-echo -n "0123456789:your_telegram_token" | oasis rofl secret set TOKEN -
+echo -n "0123456789:your_telegram_token" | oasis rofl secret set TELEGRAM_API_TOKEN -
 oasis rofl update
 oasis rofl deploy
 ```
