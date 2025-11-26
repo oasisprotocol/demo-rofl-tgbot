@@ -7,7 +7,7 @@ services:
 
   python-telegram-bot:
     build: .
-    image: "ghcr.io/oasisprotocol/demo-rofl-tgbot:ollama"
+    image: "ghcr.io/oasisprotocol/demo-rofl-tgbot@sha256:9bc10c0b9834bd6b0624454bf301a69514d66ae890f05e0afa0812697ab69e9c"
     platform: linux/amd64
     environment:
       - TELEGRAM_API_TOKEN=${TELEGRAM_API_TOKEN}
