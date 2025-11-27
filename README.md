@@ -30,7 +30,7 @@ rm rofl.yaml
 
 oasis rofl init
 oasis rofl create
-oasis build
+oasis rofl build
 echo -n "0123456789:your_telegram_token" | oasis rofl secret set TELEGRAM_API_TOKEN -
 oasis rofl update
 oasis rofl deploy
